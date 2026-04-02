@@ -7,10 +7,25 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# dependencies
 node_modules
+
+# build
 dist
 dist-ssr
+
+# env
+.env
+.env.*
+!.env.example
+
+# local config
 *.local
+
+# Supabase
+supabase/.temp
+supabase/.env
+supabase/.branches
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +37,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# OS
+Thumbs.db
