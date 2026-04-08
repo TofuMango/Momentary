@@ -7,12 +7,22 @@ import gitHubLogo from "@/assets/github-mark.svg";
 import kakaoLogo from "@/assets/kakao-mark.svg";
 import googlLogo from "@/assets/google-mark.svg";
 import { useSignInWithOAuth } from "@/hooks/mutations/use-sign-in-with-oauth";
+import { toast } from "sonner";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { mutate: signInWithPassword } = useSignInWithPassword();
+  const { mutate: signInWithPassword } = useSignInWithPassword({
+    // 비밀번호 불일치 시, 토스트 메시지 출력 및 필드 초기화
+    onError: (error) => {
+      toast.error(error.message, {
+        position: "top-center",
+      });
+      setPassword("");
+    },
+  });
+
   const { mutate: signInWithOAuth } = useSignInWithOAuth();
 
   const handleSignInWithPasswordClick = () => {
