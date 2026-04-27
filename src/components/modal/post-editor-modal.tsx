@@ -13,6 +13,11 @@ export default function PostEditorModal() {
     close();
   };
 
+  const handleCreatePostClick = () => {
+    if (content.trim() === "") return;
+    
+  };
+
   useEffect(() => {
     if (textareaRef.current) {
       // 컨텐츠를 입력하거나 삭제할때마다 높이 초기화

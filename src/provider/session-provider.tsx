@@ -1,8 +1,8 @@
 import GlobalLoader from "@/components/global-loader";
+import { useProfileData } from "@/hooks/queries/use-profile-data";
 import { supabase } from "@/lib/supabase";
 import { useSetSession, useIsSessionLoaded, useSession } from "@/store/session";
 import { useEffect, type ReactNode } from "react";
-import { useProfileData } from "../queries/use-profile-data";
 
 export default function SessionProvider({ children }: { children: ReactNode }) {
   const session = useSession();
@@ -12,8 +12,6 @@ export default function SessionProvider({ children }: { children: ReactNode }) {
   const { data: profile, isLoading: isProfileLoading } = useProfileData(
     session?.user.id,
   );
-
-  
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
