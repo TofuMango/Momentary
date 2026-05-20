@@ -6,6 +6,7 @@ import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import { useCreatePost } from "@/hooks/mutations/post/use-create-post";
 import { toast } from "sonner";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
+import { useSession } from "@/store/session";
 
 type Image = {
   file: File;
@@ -13,6 +14,7 @@ type Image = {
 };
 
 export default function PostEditorModal() {
+  const session = useSession();
   const { isOpen, close } = usePostEditorModal();
   const { mutate: createPost, isPending: isCreatePostPending } = useCreatePost({
     // 포스트 생성에 성공하면 modal close
@@ -38,7 +40,11 @@ export default function PostEditorModal() {
   const handleCreatePostClick = () => {
     // content가 공백일 경우 그냥 return
     if (content.trim() === "") return;
-    createPost(content);
+    createPost({
+      content,
+      images: images.map((image) => image.file),
+      userId: session!.user.id,
+    });
   };
 
   const handleSelectImages = (e: ChangeEvent<HTMLInputElement>) => {
